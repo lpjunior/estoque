@@ -7,7 +7,7 @@ create table if not exists categoria(
 
 drop table if exists produto cascade;
 create table if not exists produto(
-    id int primary key,
+    id serial primary key,
     nome varchar(255) unique not null,
     descricao text not null,
     valor_compra numeric(5, 2),
