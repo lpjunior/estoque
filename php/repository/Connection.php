@@ -1,23 +1,28 @@
 <?php
-    class Connection extends PDO {
 
-        const HOSTNAME = "";
-        const USERNAME = "";
-        const PASSWORD = "";
-        const SCHEMA = "";
-        const PORT = 5432;
-        
+    class ConnectionHeroku extends PDO {
         private $conn;
 
-        # magic method
         public function __construct() {
-            $key = "strval";
-            $dsn = "pgsql:host={$key(self::HOSTNAME)};dbname={$key(self::SCHEMA)};port={$key(self::PORT)}";
-            $this->conn = new PDO($dsn, self::USERNAME, self::PASSWORD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $this->conn = new PDO($this->getDSN());
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 
         public function getConnection() {
             $this->conn->query("SET timezone TO 'America/Sao_Paulo'");
             return $this->conn;
         }
-    }
+
+        private static function getDSN(): string {
+            $db = parse_url(getenv("DATABASE_URL"));
+
+            return "pgsql:" . sprintf(
+                "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+                $db["host"],
+                $db["port"],
+                $db["user"],
+                $db["pass"],
+                ltrim($db["path"], "/")
+            );
+        }
+    } 
