@@ -1,44 +1,24 @@
 <?php
-    //======================================================================
-    // Entity class
-    //======================================================================
-
-    //-----------------------------------------------------
-    // Descrição do recurso
-    //-----------------------------------------------------
-
-    /* É uma classe que modela objetos (abstratas ou não) cuja informação e o 
-       comportamento associado são, de maneira geral, persistentes, podendo ser 
-       armazenados num arquivo ou banco de dados. 
-    */
-
     class Categoria {
 
+        # declaração dos membros de classe (atributos)
         private int $id;
         private string $nome;
 
-        # encapsulamento
-        public function getId():int{
+        # encapsulamento (get|set)
+        public function getId(): int {
             return $this->id;
         }
 
-        public function setId($id) {
+        public function setId(int $id): void {
             $this->id = $id;
         }
 
-        public function getNome() {
+        public function getNome(): string {
             return $this->nome;
         }
 
-        public function setNome($nome) {
+        public function setNome(string $nome): void {
             $this->nome = $nome;
-        }
-
-        # magic method (toString)
-        public function __toString() {
-            return json_encode(array(
-                "id" => $this->getId(),
-                "nome" => $this->getNome()
-            ));
         }
     }

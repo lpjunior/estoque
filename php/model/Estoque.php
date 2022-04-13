@@ -14,7 +14,7 @@
             return $this->id;
         }
 
-        public function setId($id) {
+        public function setId($id): void {
             $this->id = $id;
         }
 
@@ -22,7 +22,7 @@
             return $this->dataCadastro;
         }
 
-        public function setDataCadastro($dataCadastro) {
+        public function setDataCadastro($dataCadastro): void {
             $this->dataCadastro = $dataCadastro;
         }
 
@@ -30,7 +30,7 @@
             return $this->qtdMin;
         }
 
-        public function setQtdMin($qtdMin) {
+        public function setQtdMin($qtdMin): void {
             $this->qtdMin = $qtdMin;
         }
 
@@ -38,7 +38,7 @@
             return $this->qtdMax;
         }
 
-        public function setQtdMax($qtdMax) {
+        public function setQtdMax($qtdMax): void {
             $this->qtdMax = $qtdMax;
         }
 
@@ -46,7 +46,7 @@
             return $this->qtdAtual;
         }
 
-        public function setQtdAtual($qtdAtual) {
+        public function setQtdAtual($qtdAtual): void {
             $this->qtdAtual = $qtdAtual;
         }
 
@@ -54,19 +54,7 @@
             return $this->produtoId;
         }
 
-        public function setProdutoId($produtoId) {
+        public function setProdutoId($produtoId): void {
             $this->produtoId = $produtoId;
-        }
-
-        # magic method (toString)
-        public function __toString() {
-            return json_encode(array(
-                "id" => $this->getId(),
-                "dataCadastro" => $this->getDataCadastro(),
-                "qtdMin" => $this->getQtdMin(),
-                "qtdMax" => $this->getQtdMax(),
-                "qtdAtual" => $this->getQtdAtual(),
-                "produtoId" => $this->getProdutoId()
-            ));
         }
     }

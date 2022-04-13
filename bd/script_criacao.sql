@@ -29,3 +29,12 @@ create table if not exists estoque(
     criado_em timestamp not null default current_timestamp,
 	foreign key(produto_id) references produto(id)
 );
+
+drop table if exists usuario cascade;
+create table if not exists usuario(
+    id serial primary key,
+    nome varchar(150) not null,
+    email varchar(150) not null,
+    senha varchar(150) not null
+);
+

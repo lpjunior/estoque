@@ -8,7 +8,7 @@
             $this->repository = new EstoqueRepository();
         }
 
-        public function cadastrar(Produto $produto) {
+        public function cadastrar(Produto $produto): bool {
             return $this->repository->fnAddProduto($produto);
         }
     } 

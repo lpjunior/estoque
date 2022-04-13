@@ -15,8 +15,7 @@ class Produto
         return $this->id;
     }
 
-    public function setId($id)
-    {
+    public function setId($id): void {
         $this->id = $id;
     }
 
@@ -25,8 +24,7 @@ class Produto
         return $this->nome;
     }
 
-    public function setNome($nome)
-    {
+    public function setNome($nome): void {
         $this->nome = $nome;
     }
 
@@ -35,8 +33,7 @@ class Produto
         return $this->descricao;
     }
 
-    public function setDescricao($descricao)
-    {
+    public function setDescricao($descricao): void {
         $this->descricao = $descricao;
     }
 
@@ -44,7 +41,7 @@ class Produto
         return $this->valorCompra;
     }
 
-    public function setValorCompra($valorCompra) {
+    public function setValorCompra($valorCompra): void {
         $this->valorCompra = $valorCompra;
     }
 
@@ -52,7 +49,7 @@ class Produto
         return $this->valorVenda;
     }
 
-    public function setdValorVenda($valorVenda) {
+    public function setdValorVenda($valorVenda): void {
         $this->valorVenda = $valorVenda;
     }
 
@@ -60,7 +57,7 @@ class Produto
         return $this->status;
     }
 
-    public function setStatus($status) {
+    public function setStatus($status): void {
         $this->status = $status;
     }
 
@@ -68,20 +65,8 @@ class Produto
         return $this->categoriaId;
     }
 
-    public function setCategoriaId($categoriaId) {
+    public function setCategoriaId($categoriaId): void {
         $this->categoriaId = $categoriaId;
-    }
-
-    public function __toString()
-    {
-        return json_encode(array(
-            "nome" => $this->getNome(), 
-            "descricao" => $this->getDescricao(), 
-            "valorCompra" => $this->getdValorCompra(), 
-            "valorVenda" => $this->getdValorVenda(), 
-            "status" => $this->getStatus(), 
-            "categoriaId" => $this->getCategoriaId()
-        ));
     }
 }
 

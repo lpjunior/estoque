@@ -1,33 +1,31 @@
 <?php
     require_once('config/config.php');
 
-    $categoriaService = new CategoriaService();
+    $respository = new EstoqueRepository();
 
     # cadastrar categoria
     $categoria = new Categoria();
-    $categoria->setNome("Informática");
-    $categoriaService->cadastrar($categoria);
-    
-    $produtoService = new ProdutoService();
+    $categoria->setNome("Eletronico");
+    $respository->fnAddCategoria($categoria);
     
     # cadastrar produto
-    $produto = new Produto();
-    $produto->setNome('Mouse Logitech G600');
-    $produto->setDescricao('Mouse Gamer');
-    $produto->setValorCompra(110.00);
-    $produto->setdValorVenda(538.00);
-    $produto->setStatus(true);
-    $produto->setCategoriaId(1);
+    $produto = new stdClass();
+    $produto->id = 1;
+    $produto->mome = 'Mouse Logitech G600';
+    $produto->descricao = 'Mouse Gamer';
+    $produto->valorCompra = 110.00;
+    $produto->valorVenda = 538.00;
+    $produto->status = true;
+    $produto->categoriaId = 1;
 
-    $produtoService->cadastrar($produto);
+    #fnAddProduto($produto);
 
     # cadastrar estoque
-    $estoqueService = new EstoqueService();
-    $estoque = new Estoque();
-    $estoque->setDataCadastro(date('Y-m-d H:i:s'));
-    $estoque->setQtdMin(5);
-    $estoque->setQtdMax(99);
-    $estoque->setQtdAtual(35);
-    $estoque->setProdutoId(1);
+    $estoque = new stdClass();
+    $estoque->dataCadastro = date('Y-m-d H:i:s');
+    $estoque->qtdMin = 5;
+    $estoque->qtdMax = 99;
+    $estoque->qtdAtual = 35;
+    $estoque->qrodutoId = 1;
 
-    $estoqueService->cadastrar($estoque);
+    #fnAddEstoque($estoque);

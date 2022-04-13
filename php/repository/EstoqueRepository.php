@@ -1,23 +1,22 @@
 <?php
 class EstoqueRepository
 {
-
     private $conn;
 
-    public function __construct()
-    {
-        $connection =new ConnectionHeroku();
+    public function __construct() {
+
+        $connection = new Connection();
         $this->conn = $connection->getConnection();
     }
-
-    public function fnAddCategoria($nome): bool
+    
+    function fnAddCategoria(Categoria $categoria): bool
     {
         try {
 
             $query = "insert into categoria (nome) values (:pnome) on conflict do nothing";
 
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(":pnome", $nome);
+            $stmt->bindValue(":pnome", $categoria->getNome());
 
             if ($stmt->execute())
                 return true;
@@ -32,7 +31,7 @@ class EstoqueRepository
         }
     }
 
-    public function fnAddProduto(Produto $produto): bool
+    function fnAddProduto($produto): bool
     {
         try {
 
@@ -61,7 +60,7 @@ class EstoqueRepository
         }
     }
 
-    public function fnAddEstoque(Estoque $estoque): bool
+    function fnAddEstoque($estoque): bool
     {
         try {
 

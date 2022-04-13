@@ -8,7 +8,7 @@
             $this->repository = new EstoqueRepository();
         }
 
-        public function cadastrar(Categoria $categoria) {
-            return $this->repository->fnAddCategoria($categoria->getNome());
+        public function cadastrar(Categoria $categoria): bool {
+            return $this->repository->fnAddCategoria($categoria);
         }
     } 
