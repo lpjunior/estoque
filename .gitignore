@@ -474,5 +474,9 @@ composer.lock
 *.scss.map
 
 ##### Local Files
+ConnectionLocal.php
 ConnectionHeroku.php
 Connection.php
+php/repository/ConnectionLocal.php
+php/repository/ConnectionHeroku.php
+php/repository/Connection.php
