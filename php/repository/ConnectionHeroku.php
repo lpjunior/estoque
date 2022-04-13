@@ -9,6 +9,7 @@
         }
 
         public function getConnection() {
+            $this->conn->query("SET timezone TO 'America/Sao_Paulo'");
             return $this->conn;
         }
 
