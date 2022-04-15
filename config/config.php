@@ -1,36 +1,31 @@
 <?php 
+    session_start();
+
+    if(!isset($_SESSION['usuario'])) {
+        $_SESSION['error'] = 'Faça o login primeiro';
+        header('location: ./login.php');
+        exit;
+    }
 
     # https://www.php.net/manual/en/function.date-default-timezone-set
     # https://www.php.net/manual/pt_BR/function.spl-autoload-register.php
 
     date_default_timezone_set('America/Sao_Paulo');
 
-    # incluir as classes do diretório php/model
     spl_autoload_register(function($file_name){
+        
+        $files = array(
+            # incluir as classes do diretório php/model
+            "php" . DIRECTORY_SEPARATOR . "model" . DIRECTORY_SEPARATOR . "{$file_name}.php",
+            # incluir as classes do diretório php/repository
+            "php" . DIRECTORY_SEPARATOR . "repository" . DIRECTORY_SEPARATOR . "{$file_name}.php",
+            # incluir as classes do diretório php/service
+            "php" . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . "{$file_name}.php",
+        );
 
-        $fileName = "php" . DIRECTORY_SEPARATOR . "model" . DIRECTORY_SEPARATOR . "{$file_name}.php";
-
-        if(file_exists($fileName)) {
-            require_once($fileName);
-        }
-    });
-
-    # incluir as classes do diretório php/repository
-    spl_autoload_register(function($file_name){
-
-        $fileName = "php" . DIRECTORY_SEPARATOR . "repository" . DIRECTORY_SEPARATOR . "{$file_name}.php";
-
-        if(file_exists($fileName)) {
-            require_once($fileName);
-        }
-    });
-
-    # incluir as classes do diretório php/service
-    spl_autoload_register(function($file_name){
-
-        $fileName = "php" . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . "{$file_name}.php";
-
-        if(file_exists($fileName)) {
-            require_once($fileName);
+        foreach ($files as $fileName) {
+            if(file_exists($fileName)) {
+                require_once($fileName);
+            }
         }
     });

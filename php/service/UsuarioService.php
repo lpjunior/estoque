@@ -13,7 +13,11 @@
             return $this->repository->fnAddUsuario($usuario);
         }
         
-        public function login(Usuario $usuario): Usuario {
+        public function login(Usuario $usuario) {
             return $this->repository->fnLoginUsuario($usuario);
+        }
+        
+        public function listar($limit) {
+            return $this->repository->fnLisUsuarios($limit);
         }
     }

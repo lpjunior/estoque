@@ -33,7 +33,7 @@ class UsuarioRepository
         }
     }
 
-    function fnLoginUsuario(Usuario $usuario): Usuario
+    function fnLoginUsuario(Usuario $usuario)
     {
         try {
 
@@ -45,12 +45,36 @@ class UsuarioRepository
 
             if ($stmt->execute())
                 $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Usuario');
-                return $stmt->fetch();
+                if($usuario = $stmt->fetch())
+                    return $usuario;
 
             return null;
         } catch (PDOException $error) {
             echo "Erro ao efetuar o login do usuário. Erro: {$error->getMessage()}";
             return null;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+
+    public function fnLisUsuarios($limit = 9999) {
+        try {
+
+            $query = "select id, nome, email from usuario limit :plimit";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':plimit', $limit);
+
+            if($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Usuario');
+                return  $stmt->fetchAll();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar os usuários do banco. Erro: {$error->getMessage()}";
+            return false;
         } finally {
             unset($this->conn);
             unset($stmt);

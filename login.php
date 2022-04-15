@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -24,8 +25,9 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Informe suas credenciais para acessar</p>
-
-      <form action="user.login.php" method="post">
+      <p class="login-box-msg text-danger"><?= isset($_SESSION['error']) ? $_SESSION['error'] : '' ?></p>
+      <?php unset($_SESSION['error']); ?>
+      <form action="user.login" method="post">
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="inputEmail" placeholder="Email">
           <div class="input-group-append">
@@ -61,10 +63,10 @@
 
       <div class="text-center mb-3">
         <p>- OR -</p>
-        <a href="forgot-password.php" class="btn btn-block btn-outline-danger">
+        <a href="forgot-password" class="btn btn-block btn-outline-danger">
           Esqueci minha senha
         </a>
-        <a href="register.php" class="btn btn-block btn-outline-success">
+        <a href="register" class="btn btn-block btn-outline-success">
           Registrar um novo usuário
         </a>
       </div>

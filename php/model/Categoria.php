@@ -1,9 +1,11 @@
 <?php
+
     class Categoria {
 
         # declaração dos membros de classe (atributos)
         private int $id;
         private string $nome;
+        private string $criadoem;
 
         # encapsulamento (get|set)
         public function getId(): int {
@@ -20,5 +22,13 @@
 
         public function setNome(string $nome): void {
             $this->nome = $nome;
+        }
+
+        public function getCriadoEm(): string {
+            return date('d/m/Y - H:i:s', strtotime($this->criadoem));
+        }
+
+        public function setCriadoEm(string $criadoem): void {
+            $this->criadoem = $criadoem;
         }
     }

@@ -25,7 +25,7 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Registre um novo usuário</p>
 
-      <form action="user.register.php" method="post">
+      <form action="user.register" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="inputNome" placeholder="Nome completo">
           <div class="input-group-append">
@@ -67,7 +67,7 @@
         </div>
       </form>
 
-      <a href="login.php" class="text-center">Já possuo uma conta</a>
+      <a href="login" class="text-center">Já possuo uma conta</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

@@ -46,7 +46,7 @@
         <a href="login.html">Login</a>
       </p>
       <p class="mb-0">
-        <a href="register.php" class="text-center">Registrar um novo usuário</a>
+        <a href="register" class="text-center">Registrar um novo usuário</a>
       </p>
     </div>
     <!-- /.login-card-body -->

@@ -87,4 +87,145 @@ class EstoqueRepository
             unset($stmt);
         }
     }
+
+    public function fnListCategorias($limit = 9999) {
+        try {
+
+            $query = "select id, nome, criado_em criadoem from categoria limit :plimit";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':plimit', $limit);
+
+            if($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Categoria');
+                return  $stmt->fetchAll();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar as categorias no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+
+
+    public function fnListCategoriasIn($ids) {
+        try {
+
+            $inQuery = implode(',', array_fill(0, count($ids), '?'));
+            $query = "select * from categoria where id in ({$inQuery})";
+
+            $stmt = $this->conn->prepare($query);
+            foreach ($ids as $k => $id)
+                $stmt->bindValue(($k + 1), $id);
+
+            if ($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Categoria');
+                return  $stmt->fetchAll();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar as categorias no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
+    public function fnListProdutos($limit = 9999) {
+        try {
+
+            $query = "select id, nome, descricao, valor_compra valorCompra, valor_venda valorVenda, status, categoria_id categoriaId, criado_em criadoEm from produto order by criado_em desc limit :plimit";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':plimit', $limit);
+
+            if ($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Produto');
+                return  $stmt->fetchAll();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar os produtos no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+
+    public function fnLocalizarProduto($id) {
+        try {
+
+            $query = "select id, nome, descricao, valor_compra valorCompra, valor_venda valorVenda, status, categoria_id categoriaId, criado_em criadoEm from produto where id = :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':pid', $id);
+
+            if ($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Produto');
+                return  $stmt->fetch();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar os produtos no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+
+    public function fnListEstoque($limit = 9999) {
+        try {
+
+            $query = "id, data_cadastro datacadastro, qtd_min qtdmin, qtd_max qtdmax, qtd_atual qtdatual, produto_id produtoid from estoque order by criado_em desc limit :plimit";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':plimit', $limit);
+
+            if ($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Estoque');
+                return  $stmt->fetch();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar os produtos do estoque no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+
+    public function fnListCategoriasQuantidade($limit = 9999) {
+        try {
+
+            $query = "select categoria.nome categoria, count(categoria_id) quantidade from produto " .
+            "join categoria on categoria.id = categoria_id group by (categoria.nome, categoria_id) " .
+            "order by count(categoria_id) desc limit :plimit;";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':plimit', $limit);
+
+            if ($stmt->execute())
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar as categorias com quantidade no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
 }

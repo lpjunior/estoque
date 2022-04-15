@@ -1,5 +1,23 @@
 <?php 
-    require_once('config/config.php');
+    spl_autoload_register(function($file_name){
+        
+        $files = array(
+            # incluir as classes do diretório php/model
+            "php" . DIRECTORY_SEPARATOR . "model" . DIRECTORY_SEPARATOR . "{$file_name}.php",
+            # incluir as classes do diretório php/repository
+            "php" . DIRECTORY_SEPARATOR . "repository" . DIRECTORY_SEPARATOR . "{$file_name}.php",
+            # incluir as classes do diretório php/service
+            "php" . DIRECTORY_SEPARATOR . "service" . DIRECTORY_SEPARATOR . "{$file_name}.php",
+        );
+
+        foreach ($files as $fileName) {
+            if(file_exists($fileName)) {
+                require_once($fileName);
+            }
+        }
+    });
+    
+    session_start();
 
     $service = new UsuarioService();
 
@@ -12,9 +30,13 @@
 
     if($user = $service->login($usuario))
     {
-        echo "{$user->getNome()} logado com sucesso";
+        $_SESSION['usuario'] = $user->getNome();
+        header('location: ./home.php');
+        exit;
     } else {
-        echo "falha no login. Verifique email/senha";
+        $_SESSION['error'] = 'Verifique login/senha';
+        header('location: ./login.php');
+        exit;
     }
 
     

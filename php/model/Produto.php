@@ -5,10 +5,11 @@ class Produto
     private int $id;
     private string $nome;
     private string $descricao;
-    private float $valorCompra;
-    private float $valorVenda;
+    private float $valorcompra;
+    private float $valorvenda;
     private bool $status;
-    private int $categoriaId;
+    private int $categoriaid;
+    private string $criadoem;
 
     public function getId(): int
     {
@@ -37,20 +38,20 @@ class Produto
         $this->descricao = $descricao;
     }
 
-    public function getdValorCompra():float{
-        return $this->valorCompra;
+    public function getValorCompra(): float {
+        return $this->valorcompra;
     }
 
-    public function setValorCompra($valorCompra): void {
-        $this->valorCompra = $valorCompra;
+    public function setValorCompra($valorcompra): void {
+        $this->valorcompra = $valorcompra;
     }
 
-    public function getdValorVenda():float{
-        return $this->valorVenda;
+    public function getValorVenda(): float{
+        return $this->valorvenda;
     }
 
-    public function setdValorVenda($valorVenda): void {
-        $this->valorVenda = $valorVenda;
+    public function setValorVenda($valorvenda): void {
+        $this->valorvenda = $valorvenda;
     }
 
     public function getStatus() {
@@ -61,12 +62,20 @@ class Produto
         $this->status = $status;
     }
 
-    public function getCategoriaId():int {
-        return $this->categoriaId;
+    public function getCategoriaId(): int {
+        return $this->categoriaid;
     }
 
-    public function setCategoriaId($categoriaId): void {
-        $this->categoriaId = $categoriaId;
+    public function setCategoriaId($categoriaid): void {
+        $this->categoriaid = $categoriaid;
+    }
+
+    public function getCriadoEm(): string {
+        return date('d/m/Y - H:i:s', strtotime($this->criadoem));
+    }
+
+    public function setCriadoEm($criadoem): void {
+        $this->criadoem = $criadoem;
     }
 }
 
