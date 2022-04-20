@@ -21,16 +21,16 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="home" class="nav-link">Home</a>
+        <a href="load.php/load-home" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="produtos" class="nav-link">Produtos</a>
+        <a href="load.php/load-produtos" class="nav-link">Produtos</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="categorias" class="nav-link">Categorias</a>
+        <a href="load.php/load-categorias" class="nav-link">Categorias</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="usuarios" class="nav-link">Usuários</a>
+        <a href="load.php/load-usuarios" class="nav-link">Usuários</a>
       </li>
     </ul>
 

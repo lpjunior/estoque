@@ -1,7 +1,8 @@
 <?php
   require_once('config/config.php');
-  $title = 'Cadastro de categoria';
-  include_once('header.php')
+  $title = 'Detalhes de usuário';
+  include_once('header.php');
+  $usuario = unserialize($_SESSION['usuario_details']);
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -10,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Categoria</h1>
+            <h1>Usuário</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="home">Home</a></li>
-              <li class="breadcrumb-item active">Categoria</li>
+              <li class="breadcrumb-item active">Usuário</li>
             </ol>
           </div>
         </div>
@@ -31,17 +32,25 @@
           <div class="col-5 text-center d-flex align-items-center justify-content-center">
             <div class="">
               <h2>Senac<strong>|Stock</strong></h2>
-              <p class="lead mb-5">Cadastre um categoria</p>
+              <p class="lead mb-5">Detalhes do usuário</p>
             </div>
           </div>
           <div class="col-7">
-            <form action="categoria.register" method="post">
+            <form action="usuario.edit" method="post">
               <div class="form-group">
-                <label for="idNome">Nome</label>
-                <input type="text" id="idNome" name="inputNome" class="form-control" />
+                <label for="idIdentificador">Identificador</label>
+                <input type="text" id="idIdentificador" name="inputIdentificador" class="form-control" value="<?= $usuario->getId() ?>" readonly/>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-dark">Cadastrar</button>
+                <label for="idNome">Nome</label>
+                <input type="text" id="idNome" name="inputNome" class="form-control" value="<?= $usuario->getNome() ?>" />
+              </div>
+              <div class="form-group">
+                <label for="idEmail">Email</label>
+                <input type="text" id="idEmail" name="inputEmail" class="form-control" value="<?= $usuario->getEmail() ?>" />
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-dark">Salvar</button>
               </div>
             </form>
           </div>

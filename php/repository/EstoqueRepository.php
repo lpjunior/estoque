@@ -30,6 +30,29 @@ class EstoqueRepository
             unset($stmt);
         }
     }
+    
+    function fnUpdateCategoria(Categoria $categoria): bool
+    {
+        try {
+
+            $query = "update categoria set nome = :pnome where id = :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(":pid", $categoria->getId());
+            $stmt->bindValue(":pnome", $categoria->getNome());
+
+            if ($stmt->execute())
+                return true;
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao atualizar a categoria no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
 
     function fnAddProduto($produto): bool
     {
@@ -88,7 +111,7 @@ class EstoqueRepository
         }
     }
 
-    public function fnListCategorias($limit = 9999) {
+    public function fnListCategorias($limit) {
         try {
 
             $query = "select id, nome, criado_em criadoem from categoria limit :plimit";
@@ -111,13 +134,34 @@ class EstoqueRepository
         }
     }
 
+    public function fnLocalizarCategoria($id) {
+        try {
+            $query = "select * from categoria where id = :pid";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':pid', $id);
 
+            if ($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Categoria');
+                return  $stmt->fetch();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao listar as categorias no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
     public function fnListCategoriasIn($ids) {
         try {
 
             $inQuery = implode(',', array_fill(0, count($ids), '?'));
             $query = "select * from categoria where id in ({$inQuery})";
-
+            
             $stmt = $this->conn->prepare($query);
             foreach ($ids as $k => $id)
                 $stmt->bindValue(($k + 1), $id);
@@ -137,7 +181,7 @@ class EstoqueRepository
         }
     }
     
-    public function fnListProdutos($limit = 9999) {
+    public function fnListProdutos($limit) {
         try {
 
             $query = "select id, nome, descricao, valor_compra valorCompra, valor_venda valorVenda, status, categoria_id categoriaId, criado_em criadoEm from produto order by criado_em desc limit :plimit";

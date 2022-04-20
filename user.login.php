@@ -30,12 +30,14 @@
 
     if($user = $service->login($usuario))
     {
-        $_SESSION['usuario'] = $user->getNome();
-        header('location: ./home.php');
+        $_SESSION['usuario_details'] = $user->getNome();
+        header('location: ./load.php/load-home');
         exit;
     } else {
+        echo "else";
+        exit;
         $_SESSION['error'] = 'Verifique login/senha';
-        header('location: ./login.php');
+        header('location: /estoque/login');
         exit;
     }
 

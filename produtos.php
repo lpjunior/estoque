@@ -1,6 +1,5 @@
 <?php 
   require_once('config/config.php'); 
-  $produtoService = new ProdutoService(); 
 
   $title = 'Produtos';
   include_once('header.php');
@@ -36,7 +35,7 @@
               </a>
           </div>
           <div class="row">
-            <?php foreach ($produtoService->listar(10) as $index => $produto): ?>
+            <?php foreach (unserialize($_SESSION['produtos']) as $index => $produto): ?>
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
               <div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">

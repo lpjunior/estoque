@@ -1,7 +1,5 @@
 <?php 
   require_once('config/config.php');
-  $categoriaService = new CategoriaService(); 
-  $produtoService = new ProdutoService(); 
   $title = 'Home';
   include_once('header.php');
 ?>
@@ -44,7 +42,7 @@
           <div class="row">
             <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
               <div class="row">
-                <?php foreach($categoriaService->listarComQuantidade(3) as $categoria): ?>
+                <?php foreach(unserialize($_SESSION['categorias']) as $categoria): ?>
                 <div class="col-12 col-sm-4">
                   <div class="info-box bg-light">
                     <div class="info-box-content">
@@ -58,7 +56,7 @@
               <div class="row">
                 <div class="col-12">
                   <h4>Últimos produtos adicionados</h4>
-                  <?php foreach ($produtoService->listar(3) as $index => $produto): ?>
+                  <?php foreach (unserialize($_SESSION['produtos']) as $index => $produto): ?>
                     <div class="post <?= ($index%2==0) ? 'clearfix' : '' ?>">
                       <div class="user-block">
                         <span>

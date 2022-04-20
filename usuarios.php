@@ -1,6 +1,5 @@
 <?php 
-  require_once('config/config.php'); 
-  $usuarioService = new UsuarioService(); 
+  require_once('config/config.php');
 
   $title = 'Usuários';
   include_once('header.php');
@@ -44,7 +43,7 @@
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
-                  <?php foreach ($usuarioService->listar(10) as $usuario): ?>
+                  <?php foreach (unserialize($_SESSION['usuarios']) as $usuario): ?>
                     <div class="col-7">
                       <h2 class="lead"><b><?= $usuario->getNome() ?></b></h2>
                       <p class="text-muted text-sm"><b>Email: </b> <?= $usuario->getEmail() ?> </p>
@@ -54,7 +53,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="usuario.details?id=<?= $usuario->getId() ?>" class="btn btn-sm btn-primary">
+                    <a href="load.php/load-usuario/<?= $usuario->getId() ?>" class="btn btn-sm btn-primary">
                       <i class="fas fa-user"></i> Editar
                     </a>
                   </div>

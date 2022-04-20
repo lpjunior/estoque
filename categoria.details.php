@@ -1,7 +1,8 @@
 <?php
   require_once('config/config.php');
-  $title = 'Cadastro de categoria';
-  include_once('header.php')
+  $title = 'Detalhes de categoria';
+  include_once('header.php');
+  $categoria = unserialize($_SESSION['categoria']);
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -31,17 +32,21 @@
           <div class="col-5 text-center d-flex align-items-center justify-content-center">
             <div class="">
               <h2>Senac<strong>|Stock</strong></h2>
-              <p class="lead mb-5">Cadastre um categoria</p>
+              <p class="lead mb-5">Detalhes da categoria</p>
             </div>
           </div>
           <div class="col-7">
-            <form action="categoria.register" method="post">
+            <form action="categoria.edit" method="post">
               <div class="form-group">
-                <label for="idNome">Nome</label>
-                <input type="text" id="idNome" name="inputNome" class="form-control" />
+                <label for="idIdentificador">Identificador</label>
+                <input type="text" id="idIdentificador" name="inputIdentificador" class="form-control" value="<?= $categoria->getId() ?>" readonly/>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-dark">Cadastrar</button>
+                <label for="idNome">Nome</label>
+                <input type="text" id="idNome" name="inputNome" class="form-control" value="<?= $categoria->getNome() ?>" />
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-dark">Salvar</button>
               </div>
             </form>
           </div>

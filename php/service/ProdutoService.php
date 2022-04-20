@@ -12,7 +12,7 @@
             return $this->repository->fnAddProduto($produto);
         }
         
-        public function listar($limit) {
+        public function listar($limit = 9999) {
             return $this->repository->fnListProdutos($limit);
         }
         

@@ -1,6 +1,5 @@
 <?php 
-  require_once('config/config.php'); 
-  $categoriaService = new CategoriaService(); 
+  require_once('config/config.php');
 
   $title = 'Categorias';
   include_once('header.php');
@@ -36,7 +35,7 @@
             </a>
           </div>
           <div class="row">
-            <?php foreach ($categoriaService->listar(10) as $categoria): ?>
+            <?php foreach (unserialize($_SESSION['categorias']) as $categoria): ?>
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
               <div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
@@ -54,7 +53,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="produto.details?id=<?= $categoria->getId() ?>" class="btn btn-sm btn-primary">
+                    <a href="load.php/load-categoria/<?= $categoria->getId() ?>" class="btn btn-sm btn-primary">
                       <i class="fas fa-boxes-stacked"></i> Editar
                     </a>
                   </div>

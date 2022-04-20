@@ -32,6 +32,53 @@ class UsuarioRepository
             unset($stmt);
         }
     }
+    
+    function fnUpdateUsuario(Usuario $usuario): bool
+    {
+        try {
+
+            $query = "update usuario set nome = :pnome, email = :pemail where id = :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(":pnome", $usuario->getNome());
+            $stmt->bindValue(":pemail", $usuario->getEmail());
+            $stmt->bindValue(":pid", $usuario->getId());
+
+            if ($stmt->execute())
+                return true;
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao inserir o usuário no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
+    function fnUpdateSenhaUsuario(Usuario $usuario): bool
+    {
+        try {
+
+            $query = "update usuario set senha = :psenha where id = :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(":psenha", md5($usuario->getSenha()));
+            $stmt->bindValue(":pid", $usuario->getId());
+
+            if ($stmt->execute())
+                return true;
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao inserir o usuário no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
 
     function fnLoginUsuario(Usuario $usuario)
     {
@@ -74,6 +121,29 @@ class UsuarioRepository
             return false;
         } catch (PDOException $error) {
             echo "Erro ao listar os usuários do banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
+    public function fnLocalizarUsuario($id) {
+        try {
+
+            $query = "select id, nome, email from usuario limit :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':pid', $id);
+
+            if($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Usuario');
+                return  $stmt->fetch();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao localizar o usuário do banco. Erro: {$error->getMessage()}";
             return false;
         } finally {
             unset($this->conn);
