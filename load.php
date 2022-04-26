@@ -44,6 +44,16 @@
         header('location: /estoque/usuario.details');
         exit;
     }
+    
+    if($urlSegments[count($urlSegments) - 2] == 'load-produto') {
+        $id = $urlSegments[count($urlSegments) - 1];
+
+        $_SESSION['produto'] = serialize($produtoService->localizar($id));
+        $_SESSION['categorias'] = serialize($categoriaService->listar());
+
+        header('location: /estoque/produto.details');
+        exit;
+    }
 
     if($urlSegments[count($urlSegments) - 1] == 'load-home') {
         $_SESSION['produtos'] = serialize($produtoService->listar(3));

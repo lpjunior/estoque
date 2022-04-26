@@ -39,7 +39,7 @@
       <!-- Navbar Search -->
       <li class="nav-item">
         <a class="nav-link" href="#" role="button">
-          <span>Bem vindo <strong><?= $_SESSION['usuario'] ?></strong></span>
+          <span>Bem vindo <strong><?= $_SESSION['usuario_details'] ?></strong></span>
         </a>
       </li>
       <li class="nav-item">

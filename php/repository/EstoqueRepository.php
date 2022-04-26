@@ -65,10 +65,62 @@ class EstoqueRepository
             $stmt = $this->conn->prepare($query);
             $stmt->bindValue(":pnome", $produto->getNome());
             $stmt->bindValue(":pdescricao", $produto->getDescricao());
-            $stmt->bindValue(":pvalorCompra", $produto->getdValorCompra());
-            $stmt->bindValue(":pvalorVenda", $produto->getdValorVenda());
+            $stmt->bindValue(":pvalorCompra", $produto->getValorCompra());
+            $stmt->bindValue(":pvalorVenda", $produto->getValorVenda());
             $stmt->bindValue(":pstatus", $produto->getStatus());
             $stmt->bindValue(":pcategoriaId", $produto->getCategoriaId());
+
+            if ($stmt->execute())
+                return true;
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao inserir o produto no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
+    function fnUpdateProduto($produto): bool
+    {
+        try {
+
+            $query = "update produto set nome = :pnome, descricao = :pdescricao, valor_compra = :pvalorCompra, valor_venda = :pvalorVenda, status = :pstatus ";
+            $query .= "where id = :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(":pnome", $produto->getNome());
+            $stmt->bindValue(":pdescricao", $produto->getDescricao());
+            $stmt->bindValue(":pvalorCompra", $produto->getValorCompra());
+            $stmt->bindValue(":pvalorVenda", $produto->getValorVenda());
+            $stmt->bindValue(":pstatus", $produto->getStatus());
+            $stmt->bindValue(":pid", $produto->getId());
+
+            if ($stmt->execute())
+                return true;
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao inserir o produto no banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
+    function fnUpdateCategoriaProduto($produto): bool
+    {
+        try {
+
+            $query = "update produto set categoria_id = :pcategoriaId ";
+            $query .= "where id = :pid";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(":pcategoriaId", $produto->getCategoriaId());
+            $stmt->bindValue(":pid", $produto->getId());
 
             if ($stmt->execute())
                 return true;

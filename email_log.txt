@@ -1,0 +1,22 @@
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 19:23
+
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 19:24
+
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 19:25
+
+SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
+prof.lpjunior@gmail.com
+2022-04-26 19:25
+
+SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
+prof.lpjunior@gmail.com
+2022-04-26 19:25
+
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 19:53
+
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 19:55
+
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 19:57
+
+Email enviado: prof.lpjunior@gmail.com - 2022-04-26 20:16
+

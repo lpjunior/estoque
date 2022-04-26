@@ -55,7 +55,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="produto.details?id=<?= $produto->getId() ?>" class="btn btn-sm btn-primary">
+                    <a href="load.php/load-produto/<?= $produto->getId() ?>" class="btn btn-sm btn-primary">
                       <i class="fas fa-box"></i> Editar
                     </a>
                   </div>

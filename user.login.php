@@ -34,9 +34,10 @@
         header('location: ./load.php/load-home');
         exit;
     } else {
-        echo "else";
-        exit;
-        $_SESSION['error'] = 'Verifique login/senha';
+        $notificacao = new stdClass();
+        $notificacao->status = "danger";
+        $notificacao->msg = 'Verifique login/senha';
+        $_SESSION['status_login'] = serialize($notificacao);
         header('location: /estoque/login');
         exit;
     }

@@ -1,9 +1,13 @@
 <?php 
     session_start();
 
-    if(!isset($_SESSION['usuario'])) {
+    if(
+        !isset($_SESSION['usuario_details']) 
+        && basename($_SERVER['PHP_SELF']) != 'recuperar_senha.php'
+        && basename($_SERVER['PHP_SELF']) != 'user.register.php'
+    ) {
         $_SESSION['error'] = 'Faça o login primeiro';
-        header('location: ./login.php');
+        header('location: /estoque/login');
         exit;
     }
 

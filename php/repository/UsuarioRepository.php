@@ -4,7 +4,6 @@ class UsuarioRepository
     private $conn;
 
     public function __construct() {
-
         $connection = new Connection();
         $this->conn = $connection->getConnection();
     }
@@ -12,7 +11,6 @@ class UsuarioRepository
     function fnAddUsuario(Usuario $usuario): bool
     {
         try {
-
             $query = "insert into usuario (nome, email, senha) values (:pnome, :pemail, :psenha) on conflict do nothing";
 
             $stmt = $this->conn->prepare($query);
@@ -131,10 +129,33 @@ class UsuarioRepository
     public function fnLocalizarUsuario($id) {
         try {
 
-            $query = "select id, nome, email from usuario limit :pid";
+            $query = "select id, nome, email from usuario where id = :pid";
 
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':pid', $id);
+
+            if($stmt->execute()) {
+                $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Usuario');
+                return  $stmt->fetch();
+            }
+
+            return false;
+        } catch (PDOException $error) {
+            echo "Erro ao localizar o usuário do banco. Erro: {$error->getMessage()}";
+            return false;
+        } finally {
+            unset($this->conn);
+            unset($stmt);
+        }
+    }
+    
+    public function fnLocalizarUsuarioPorEmail($email) {
+        try {
+
+            $query = "select id, nome, email from usuario where email = :pemail";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':pemail', $email);
 
             if($stmt->execute()) {
                 $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Usuario');

@@ -70,7 +70,7 @@
                       </p>
 
                       <p>
-                        <a href="produto.details?id=<?= $produto->getId() ?>" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Veja detalhes</a>
+                        <a href="load.php/load-produto/<?= $produto->getId() ?>" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Veja detalhes</a>
                       </p>
                     </div>
                     <?php endforeach; ?>

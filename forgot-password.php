@@ -25,9 +25,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Você esqueceu sua senha?<br>Aqui você pode facilmente recuperar uma nova senha.</p>
 
-      <form action="#" method="post">
+      <form action="recuperar_senha" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" name="inputContato" class="form-control" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -43,7 +43,7 @@
       </form>
 
       <p class="mt-3 mb-1">
-        <a href="login.html">Login</a>
+        <a href="login">Login</a>
       </p>
       <p class="mb-0">
         <a href="register" class="text-center">Registrar um novo usuário</a>

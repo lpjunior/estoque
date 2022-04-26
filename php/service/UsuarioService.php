@@ -32,4 +32,8 @@
         public function LocalizarPorId($id) {
             return $this->repository->fnLocalizarUsuario($id);
         }
+        
+        public function LocalizarPorEmail($email) {
+            return $this->repository->fnLocalizarUsuarioPorEmail($email);
+        }
     }

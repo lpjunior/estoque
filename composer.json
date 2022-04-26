@@ -1,0 +1,16 @@
+{
+    "name": "senac/estoque",
+    "description": "Sistema de controle de estoque em PHP",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lpjunior",
+            "email": "prof.lpjunior@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpmailer/phpmailer": "dev-master"
+    }
+}
