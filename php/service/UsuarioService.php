@@ -36,4 +36,12 @@
         public function LocalizarPorEmail($email) {
             return $this->repository->fnLocalizarUsuarioPorEmail($email);
         }
+        
+        /* public function salvaToken(AuthToken $token) {
+            return $this->repository->fnSaveToken($token);
+        }
+        
+        public function localizaToken($token) {
+            return $this->repository->fnLocalizarTokenUsuario($token);
+        } */
     }

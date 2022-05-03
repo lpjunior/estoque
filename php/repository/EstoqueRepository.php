@@ -3,15 +3,13 @@ class EstoqueRepository
 {
     private $conn;
 
-    public function __construct() {
-
-        $connection = new Connection();
-        $this->conn = $connection->getConnection();
-    }
+    public function __construct() {}
     
     function fnAddCategoria(Categoria $categoria): bool
     {
         try {
+
+            $this->openConnection();
 
             $query = "insert into categoria (nome) values (:pnome) on conflict do nothing";
 
@@ -35,6 +33,8 @@ class EstoqueRepository
     {
         try {
 
+            $this->openConnection();
+
             $query = "update categoria set nome = :pnome where id = :pid";
 
             $stmt = $this->conn->prepare($query);
@@ -57,6 +57,8 @@ class EstoqueRepository
     function fnAddProduto($produto): bool
     {
         try {
+
+            $this->openConnection();
 
             $query = "insert into produto (nome, descricao, valor_compra, valor_venda, status, categoria_id) ";
             $query .= "values (:pnome, :pdescricao, :pvalorCompra, :pvalorVenda, :pstatus, :pcategoriaId)";
@@ -87,6 +89,8 @@ class EstoqueRepository
     {
         try {
 
+            $this->openConnection();
+
             $query = "update produto set nome = :pnome, descricao = :pdescricao, valor_compra = :pvalorCompra, valor_venda = :pvalorVenda, status = :pstatus ";
             $query .= "where id = :pid";
 
@@ -115,6 +119,8 @@ class EstoqueRepository
     {
         try {
 
+            $this->openConnection();
+
             $query = "update produto set categoria_id = :pcategoriaId ";
             $query .= "where id = :pid";
 
@@ -138,6 +144,8 @@ class EstoqueRepository
     function fnAddEstoque($estoque): bool
     {
         try {
+
+            $this->openConnection();
 
             $query = "insert into estoque (data_cadastro, qtd_min, qtd_max, qtd_atual, produto_id) ";
             $query .= "values (:pdataCadastro, :pqtdMin, :pqtdMax, :pqtdAtual, :pprodutoId)";
@@ -163,13 +171,16 @@ class EstoqueRepository
         }
     }
 
-    public function fnListCategorias($limit) {
+    public function fnListCategorias($limit, $page = 1) {
         try {
 
-            $query = "select id, nome, criado_em criadoem from categoria limit :plimit";
+            $this->openConnection();
+
+            $query = "select id, nome, criado_em criadoem from categoria limit :plimit offset (:ppage * :plimit)";
 
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':plimit', $limit);
+            $stmt->bindValue(':ppage', ($page - 1));
 
             if($stmt->execute()) {
                 $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Categoria');
@@ -188,6 +199,9 @@ class EstoqueRepository
 
     public function fnLocalizarCategoria($id) {
         try {
+
+            $this->openConnection();
+
             $query = "select * from categoria where id = :pid";
             
             $stmt = $this->conn->prepare($query);
@@ -210,6 +224,8 @@ class EstoqueRepository
     
     public function fnListCategoriasIn($ids) {
         try {
+
+            $this->openConnection();
 
             $inQuery = implode(',', array_fill(0, count($ids), '?'));
             $query = "select * from categoria where id in ({$inQuery})";
@@ -236,6 +252,8 @@ class EstoqueRepository
     public function fnListProdutos($limit) {
         try {
 
+            $this->openConnection();
+
             $query = "select id, nome, descricao, valor_compra valorCompra, valor_venda valorVenda, status, categoria_id categoriaId, criado_em criadoEm from produto order by criado_em desc limit :plimit";
 
             $stmt = $this->conn->prepare($query);
@@ -258,6 +276,8 @@ class EstoqueRepository
 
     public function fnLocalizarProduto($id) {
         try {
+
+            $this->openConnection();
 
             $query = "select id, nome, descricao, valor_compra valorCompra, valor_venda valorVenda, status, categoria_id categoriaId, criado_em criadoEm from produto where id = :pid";
 
@@ -282,6 +302,8 @@ class EstoqueRepository
     public function fnListEstoque($limit = 9999) {
         try {
 
+            $this->openConnection();
+
             $query = "id, data_cadastro datacadastro, qtd_min qtdmin, qtd_max qtdmax, qtd_atual qtdatual, produto_id produtoid from estoque order by criado_em desc limit :plimit";
 
             $stmt = $this->conn->prepare($query);
@@ -305,6 +327,8 @@ class EstoqueRepository
     public function fnListCategoriasQuantidade($limit = 9999) {
         try {
 
+            $this->openConnection();
+
             $query = "select categoria.nome categoria, count(categoria_id) quantidade from produto " .
             "join categoria on categoria.id = categoria_id group by (categoria.nome, categoria_id) " .
             "order by count(categoria_id) desc limit :plimit;";
@@ -323,5 +347,10 @@ class EstoqueRepository
             unset($this->conn);
             unset($stmt);
         }
+    }
+
+    private function openConnection() {
+        $connection = new Connection();
+        $this->conn = $connection->getConnection();
     }
 }

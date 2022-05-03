@@ -2,8 +2,8 @@
 
     use PHPMailer\PHPMailer\PHPMailer;
     require 'vendor/autoload.php';
-    define('GUSER', '');
-    define('GPWD', '');
+    define('GUSER', 'aula.sendmail@gmail.com');
+    define('GPWD', 'Senac@123qwe.');
 
     function enviarEmail(Usuario $usuario)
     {

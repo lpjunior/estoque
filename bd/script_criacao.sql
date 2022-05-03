@@ -38,3 +38,14 @@ create table if not exists usuario(
     senha varchar(150) not null
 );
 
+drop table auth_token;
+create table auth_token(
+    id serial not null,
+    usuario_id int not null unique,
+    token text not null,
+    encryption_key text not null,
+    ultimo_acesso timestamp not null default current_timestamp,
+    atualizado_em timestamp not null default current_timestamp,
+    criado_em timestamp not null default current_timestamp,
+    primary key(id)
+);

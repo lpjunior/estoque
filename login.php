@@ -1,8 +1,18 @@
 <?php
   session_start();
+  require_once('./util/Crypt.php');
+  require_once('./php/model/Usuario.php');
+
   if (isset($_SESSION['usuario_details'])) {
     header('location: ./load.php/load-home');
     exit;
+  }
+
+  if(isset($_COOKIE['auth']) && !empty($_COOKIE['auth'])) {
+    $crypt = new Crypt;
+    $ecrypted = json_decode($_COOKIE['auth']);
+    
+    $user = unserialize(json_decode($crypt->decrypt($ecrypted->data, $ecrypted->key)));
   }
 ?>
 
@@ -44,7 +54,7 @@
         ?>
         <form action="user.login" method="post">
           <div class="input-group mb-3">
-            <input type="email" class="form-control" name="inputEmail" placeholder="Email">
+            <input type="email" class="form-control" name="inputEmail" placeholder="Email" value="<?= isset($user) ? $user->getEmail() : '' ?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -52,7 +62,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" name="inputSenha" placeholder="Password">
+            <input type="password" class="form-control" name="inputSenha" placeholder="Password" value="<?= isset($user) ? $user->getSenha() : '' ?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -62,7 +72,7 @@
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" id="remember">
+                <input type="checkbox" id="remember" name="remember" <?= isset($user) ? 'checked' : '' ?>>
                 <label for="remember">
                   Remember Me
                 </label>
