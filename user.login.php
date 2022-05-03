@@ -41,9 +41,6 @@ if ($user = $service->login($usuario)) {
         # cria as intancias de Crypt e AuthToken
         $crypt = new Crypt;
 
-        # gera uma token nova a cada chamada usando sha1
-        $token = sha1(uniqid(mt_rand() + time(), true));
-
         # gera o tempo de expiração do token (1 mês)
         $expire = (time() + (30 * 24 * 3600));
         
@@ -51,8 +48,7 @@ if ($user = $service->login($usuario)) {
 
         $auth = array(
             'data' => $encryp_obj['encryption'], 
-            'key' => $encryp_obj['encryption_key'], 
-            'token' => $token
+            'key' => $encryp_obj['encryption_key']
         );
 
         setcookie('auth', json_encode($auth), $expire, '/', 'localhost', isset($_SERVER['HTTPS']), true);
